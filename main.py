@@ -13,17 +13,24 @@ class AlienInvasion:
             (self.settings.screen_width, self.settings.screen_height))
         pygame.display.set_caption("Alien Invasion")
         self.ship = Ship(self)
+        self.moving_right = False
+
+    def update(self):
+            if self.moving_right:
+                self.rect.x += 1
 
     def run_game(self):
         while True:
             self._check_events()
             self._update_screen()
 
-    @staticmethod
-    def _check_events():
+    def _check_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RIGHT:
+                    self.ship.rect.x += 1
 
     def _update_screen(self):
         self.screen.fill(self.settings.bg_color)
